@@ -6,12 +6,19 @@
     font-style: normal;
 }
 
+html{
+    width: 100%;
+    height: 100%;
+}
+
 body{
     background-image: url('/static/background.jpg');
-    background-size: 100%;
+    
     margin: 0;
     display: grid;
     grid-template-rows: 1.5fr 2fr;
+    width: 100%;
+    height: 100%;
 }
 
 
@@ -52,7 +59,7 @@ nav ul li a{
 }
 /* MAIN */
 main{
-    display: flex;
+    display: grid;
     flex-direction: column;
 
 }
@@ -95,3 +102,32 @@ main{
 }
 
 
+/*---------------------------- REGISTER -------------------------------------*/
+
+.register-form{
+    
+    display: grid;
+    grid-template-columns: 30%;
+    grid-template-rows: 40% 60%; 
+    
+    
+}
+.register-form p{
+    font-family: 'Grand Hotel';
+    font-size: 9rem;
+    color: white;
+    margin: 0rem 0rem;
+    justify-self: end;
+    
+}
+
+.rform{
+    display: flex;
+    flex-direction: column;
+    justify-self: end;
+    width: 60%;
+}
+.rform input{
+    margin-top: 1rem;
+    height: 2rem;
+}

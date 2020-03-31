@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 
 {% block main %}
-    <div class="hello-main ">
-        <div class="hello row">
+    <div class="hello-main">
+        <div class="hello">
             <p>Hello</p>
         </div>
         
         {% if not session.user_id%}
-            <div class="register row">
+            <div class="register">
                 <p><a href="/register">Register</a></p>
             </div>
         {% endif %}
