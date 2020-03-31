@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Bookaloo</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+       
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+       
+        
+    </head>
+    <body >
+        <header>
+            <nav class="row">
+                <h1>Bookaloo</h1>
+                <ul>
+                    {% if session.user_id%}
+                        <li><a href="">Logout</a></li>
+                        <li><a href="">Search</a></li>
+                    {% else %}
+                        <li><a href="">Login</a></li>
+                        <li><a href="/register">Register</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+
+        <main class="main">
+            
+            {% block main %}
+            {% endblock %}
+        </main>
+        
+        
+    </body>
+</html>

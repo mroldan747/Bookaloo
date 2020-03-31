@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <div class="hello-main ">
+        <div class="hello row">
+            <p>Hello</p>
+        </div>
+        
+        {% if not session.user_id%}
+            <div class="register row">
+                <p><a href="/register">Register</a></p>
+            </div>
+        {% endif %}
+    </div>
+    
+
+{% endblock %}
