@@ -2,11 +2,10 @@
 
 {% block main %}
     <div class="register-form">
-        <p>Register</p>
-        <form class= "rform"  action="/register" method="post" id="rform">
+        <p>Log In</p>
+        <form class= "rform"  action="/login" method="post">
             <input type="text" name="username"  placeholder="Username" id="username">
             <input type="password" name="password" id="password" placeholder="Password">
-            <input type="password" name="password-confir" id="password-confir" placeholder="Password Confirmation">
             <button id="submit" type="submit">Submit</button>
         </form>
         

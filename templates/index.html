@@ -1,17 +1,37 @@
 {% extends "layout.html" %}
 
 {% block main %}
-    <div class="hello-main">
-        <div class="hello">
-            <p>Hello</p>
+<div class="hello-main">
+    <div class="hello">
+        <p>Hello</p>
+    </div>
+
+    {% if not session.user_id%}
+        <div class="register">
+            <p><a href="/register">Register</a></p>
         </div>
-        
-        {% if not session.user_id%}
+    {% else %}
+        <form class= "sform" action="/search" method="post">
+            <input type="text" name="search" id="search" placeholder="Search by ISBN, title or author...">
+            <button><i class="fas fa-search"></i></button>
+        </form> -->
+    {% endif %}
+    
+</div>
+
+
+{% endblock %}
+
+
+
+    <!-- {% if not session.user_id%}
             <div class="register">
                 <p><a href="/register">Register</a></p>
             </div>
-        {% endif %}
-    </div>
-    
+        {% else %} -->
+        <!-- {% endif %} -->
 
-{% endblock %}
+<!-- <form class= "sform" action="/search" method="post">
+        <input type="text" name="search" id="search" placeholder="Search by ISBN, title or author...">
+        <button><i class="fas fa-search"></i></button>
+    </form> -->
