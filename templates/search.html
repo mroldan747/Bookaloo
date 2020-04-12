@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="table-books">
+    <table>
+        <thead>
+            <tr>
+                <th>The books found with "{{ search }}" are :</th>
+            </tr>  
+        </thead>
+        <tbody>
+            <tr class="choose"> 
+                <td>Choose one to have more information</td>  
+            </tr>
+            {% for book in books %}
+                <tr>
+                    <td> <a href="{{ url_for('book', book_isbn = book.isbn) }}">{{ book.title.capitalize() }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

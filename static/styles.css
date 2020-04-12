@@ -13,6 +13,8 @@ html{
 
 body{
     background-image: url('/static/background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: 100%;
     margin: 0;
     display: grid;
@@ -191,3 +193,35 @@ main{
     color: white;
 
 }
+
+/*--------------------------------------------SEARCH----------------------------*/
+
+.table-books table{ 
+    width: 40%;
+    margin-left:auto; 
+    margin-right:auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    color: #666666;
+ }
+ 
+ 
+ .table-books th {
+
+     font-size: 2rem;
+ }
+ .choose {
+     font-size: 1.4rem;
+     font-style: italic;
+     color: #f99384;
+ }
+ .table-books a {
+     text-decoration: none;
+     color: #666667;
+ }
+ 
+ .table-books a:hover {
+     color: #f99384;
+     font-weight: bold;
+ }

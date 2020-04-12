@@ -13,14 +13,14 @@ reader = csv.reader(f)
 
 
 db.execute("CREATE TABLE IF NOT EXISTS books (\
-            isbn varchar(15) NOT NULL,\
+            isbn TEXT NOT NULL,\
             title TEXT NOT NULL,\
             author TEXT NOT NULL,\
             year INTEGER NOT NULL,\
             PRIMARY KEY(isbn))")
 
 for isbn, title, author, year in reader:
-    db.execute("INSERT INTO books (isbn, title, author, year) VALUES (:isbn, :title, :author, :year)", {"isbn": isbn, "title": title, "author":author, "year": year})
+    db.execute("INSERT INTO books (isbn, title, author, year) VALUES (:isbn, :title, :author, :year)", {"isbn": isbn.lower(), "title": title.lower(), "author":author.lower(), "year": year})
 
 
 db.commit() # transactions are assumed, so close the transaction finished

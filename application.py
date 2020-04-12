@@ -29,9 +29,19 @@ engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
 
-@app.route("/", methods = ["POST"])
-@login_required
+@app.route("/", methods = ["GET"])
 def index():
+    return render_template("index.html")
+
+@login_required
+@app.route("/books", methods = ["GET", "POST"])
+def books():
+    if request.method == "POST":
+        if not request.form.get("search"):
+            return "Must provide ISBN, title or author"
+        search = request.form.get("search")
+        books = db.execute("SELECT * FROM books WHERE title LIKE :search OR author LIKE :search OR isbn LIKE :search", {"search":("%"+search.lower()+"%")}).fetchall()
+        return render_template("search.html", books = books, search = search)
     return render_template("index.html")
 
 @app.route("/register", methods = ["GET", "POST"])
@@ -95,3 +105,8 @@ def logout():
     # Forget any user_id
     session.clear()
     return render_template("login.html")
+
+
+@app.route("/book/<book_isbn>", methods = ["GET", "POST"])
+def book(book_isbn):
+    return "the value is " + book_isbn
