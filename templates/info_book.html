@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="book">
+        <h2>{{ book_info.title }}</h2>
+        <p>{{ book_info.author }}</p>
+        <p>{{ book_info.isbn }}</p>
+        <p>{{ book_info.year }}</p>
+        <p>Reviews :</p>
+        <p>{{ book_info.review }}</p>
+
+</div>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, session, render_template, request
+from flask import Flask, session, render_template, request, jsonify
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -41,6 +41,8 @@ def books():
             return "Must provide ISBN, title or author"
         search = request.form.get("search")
         books = db.execute("SELECT * FROM books WHERE title LIKE :search OR author LIKE :search OR isbn LIKE :search", {"search":("%"+search.lower()+"%")}).fetchall()
+        if books is None:
+            return "There is not matches for your request"
         return render_template("search.html", books = books, search = search)
     return render_template("index.html")
 
@@ -107,6 +109,9 @@ def logout():
     return render_template("login.html")
 
 
-@app.route("/book/<book_isbn>", methods = ["GET", "POST"])
+@app.route("/book/<book_isbn>", methods = ["GET"])
 def book(book_isbn):
-    return "the value is " + book_isbn
+    book_info = db.execute("SELECT * FROM books JOIN books_review ON books.isbn = books_review.isbn WHERE books.isbn =:isbn", {"isbn":book_isbn}).fetchone()
+    print(book_info)
+    return render_template("info_book.html", book_info=book_info)
+    
