@@ -1,4 +1,3 @@
-
 @font-face {
     font-family: 'Grand Hotel';
     src: url("/static/fonts/GrandHotel-Regular.otf") format('truetype');
@@ -6,12 +5,12 @@
     font-style: normal;
 }
 
-html{
+html {
     width: 100%;
     height: 100%;
 }
 
-body{
+body {
     background-image: url('/static/background.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -23,24 +22,22 @@ body{
     height: 100%;
 }
 
-
-
 /*NAV BAR */
-nav{
+nav {
     display: flex;
     font-family: 'Montserrat', sans-serif;
     margin-left: 3rem;
     color: #666666;
-    
+
 }
 
-nav h1{
+nav h1 {
     flex-grow: 1;
     font-size: 2rem;
     letter-spacing: 0.2rem;
 }
 
-nav h1 a{
+nav h1 a {
     text-decoration: none;
     color: #666666;
 }
@@ -48,56 +45,59 @@ nav h1 a{
 nav ul {
     display: flex;
     padding: 0%;
-    
+
     justify-content: end;
     margin-right: 2rem;
     align-items: center;
 }
 
-nav ul li{
+nav ul li {
     list-style: none;
     margin-right: 2rem;
     padding-right: 2rem;
 }
 
-nav ul li a{
+nav ul li a {
     text-decoration: none;
     color: #666666;
     font-weight: bold;
 }
+
 /* MAIN */
-main{
+main {
     display: grid;
     flex-direction: column;
 
 }
-.hello-main{
+
+.hello-main {
     display: grid;
     grid-template-columns: 38%;
     grid-template-rows: 70% 30%;
     margin-left: 0rem;
 }
-.hello{
-    justify-self: center;
 
+.hello {
+    justify-self: center;
 }
 
-.hello p{
+.hello p {
     margin-bottom: 0px;
-    color:white;
+    color: white;
     font-family: 'Grand Hotel', cursive;
     font-size: 20rem;
     margin-top: 0;
-    
-    
-}
-/* ----------------------------INDEX WHEN THERE IS NOT LOGIN DONE---------------------------------- */
-.register{
-    justify-self: end;
-    
+
+
 }
 
-.register A{
+/* ----------------------------INDEX WHEN THERE IS NOT LOGIN DONE---------------------------------- */
+.register {
+    justify-self: end;
+
+}
+
+.register A {
     background-color: white;
     border-radius: 20pt;
     padding: 0.9rem 1.5rem;
@@ -109,30 +109,32 @@ main{
     font-weight: bold;
     text-decoration: none;
 }
+
 /* ----------------------------INDEX WITH LOGIN DONE---------------------------------- */
 .sform {
     display: flex;
     /* justify-content: end; */
     align-self: start;
     position: relative;
-    
+
 }
+
 .sform input {
-   width: 55%;
-   padding: 0.5rem;
-   font-family: 'Montserrat', sans-serif;
-   position: relative;
-   left:40%;
-   border-radius:5px;
-   border: none;
-} 
+    width: 55%;
+    padding: 0.5rem;
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+    left: 40%;
+    border-radius: 5px;
+    border: none;
+}
 
 .sform button {
     position: absolute;
     background: none;
     border: none;
-    top:10%;
-    left:91.5%;
+    top: 10%;
+    left: 91.5%;
     color: #666666;
     font-size: 1.5rem;
 }
@@ -143,30 +145,29 @@ main{
 
 /*---------------------------- REGISTER -------------------------------------*/
 
-.register-form{
-    
+.register-form {
     display: grid;
     grid-template-columns: 30%;
-    grid-template-rows: 40% 60%; 
-    
-    
+    grid-template-rows: 40% 60%;
 }
-.register-form p{
+
+.register-form p {
     font-family: 'Grand Hotel';
     font-size: 9rem;
     color: white;
     margin: 0rem 0rem;
     justify-self: end;
-    
+
 }
 
-.rform{
+.rform {
     display: flex;
     flex-direction: column;
     justify-self: end;
     width: 60%;
 }
-.rform input{
+
+.rform input {
     margin-top: 1rem;
     height: 2rem;
     padding: 0rem 0.5rem;
@@ -196,33 +197,52 @@ main{
 
 /*--------------------------------------------SEARCH----------------------------*/
 
-.table-books table{ 
+.table-books table {
     width: 40%;
-    margin-left:auto; 
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
     background-color: rgba(255, 255, 255, 0.8);
     font-family: 'Montserrat', sans-serif;
     text-align: center;
     color: #666666;
- }
- 
- 
- .table-books th {
+}
 
-     font-size: 2rem;
- }
- .choose {
-     font-size: 1.4rem;
-     font-style: italic;
-     color: #f99384;
-     
- }
- .table-books a {
-     text-decoration: none;
-     color: #666667;
- }
- 
- .table-books a:hover {
-     color: #f99384;
-     font-weight: bold;
- }
+.table-books th {
+
+    font-size: 2rem;
+}
+
+.choose {
+    font-size: 1.4rem;
+    font-style: italic;
+    color: #f99384;
+
+}
+
+.table-books a {
+    text-decoration: none;
+    color: #666667;
+}
+
+.table-books a:hover {
+    color: #f99384;
+    font-weight: bold;
+}
+
+/*--------------------------------------------INFO BOOK----------------------------*/
+.book {
+    color: white;
+    text-transform: capitalize;
+    font-family: 'Montserrat', sans-serif;
+    margin-left: 3rem;
+}
+
+.book span {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #666667;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-right: 1rem;
+}
+
+

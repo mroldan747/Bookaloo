@@ -6,6 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
+import requests
 
 from helpers import login_required
 
@@ -111,7 +112,47 @@ def logout():
 
 @app.route("/book/<book_isbn>", methods = ["GET"])
 def book(book_isbn):
-    book_info = db.execute("SELECT * FROM books JOIN books_review ON books.isbn = books_review.isbn WHERE books.isbn =:isbn", {"isbn":book_isbn}).fetchone()
-    print(book_info)
-    return render_template("info_book.html", book_info=book_info)
+    book_info = db.execute("SELECT * FROM books WHERE books.isbn =:isbn", {"isbn":book_isbn}).fetchone()
+    reviews = db.execute("SELECT b.review, users.user_name, b.rating FROM books_review AS b\
+                          JOIN users ON users.id_user = b.id_user\
+                          JOIN books ON books.isbn = b.isbn WHERE books.isbn =:isbn", {"isbn":book_isbn}).fetchall()
+    print(reviews)
+    rev_count = goodreads(book_isbn)[0]
+    avg_rating = goodreads(book_isbn)[1]
+
+    if reviews is None:
+        any_reviews = False
+    else:
+        any_reviews = True
+    return render_template("info_book.html", book_info=book_info, reviews=reviews, rev_count=rev_count, avg=avg_rating, any_reviews=any_reviews)
     
+@app.route("/review", methods = ["GET","POST"])
+def review():
+    if request.method == "POST":
+        book = request.form.get("isbn")
+        rate = request.form.get("rate")
+        review = request.form.get("review")
+        usr = session["user_id"]
+        check_usr_review = db.execute("SELECT * FROM books_review AS b JOIN users ON users.id_user = b.id_user WHERE b.id_user =:id", {"id": usr}).fetchall()
+        if check_usr_review is not None:
+            return "You have already given a review for this book"
+        else:
+            db.execute("INSERT INTO books_review (review, isbn, id_user, rating) VALUES (:review, :isbn, :id_user, :rating)", {"review": review, "isbn": book, "id_user": usr, "rating": rate})
+            db.commit
+            return book(book)
+    else:
+        return render_template("book.html")
+
+@app.route("/api/<isbn>", methods = ["GET"])
+def api(isbn):
+    rows = dict(db.execute("SELECT * FROM books WHERE isbn=:isbn", {"isbn": isbn}).fetchone())
+    rows["review_count"] = goodreads(isbn)[0]
+    rows["average_score"] = goodreads(isbn)[1]
+    return rows
+
+def goodreads(isbn):
+    KEY ="G62mcEA3YwZRgW09SH0gA"
+    goodRead = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": KEY, "isbns":isbn})
+    rev_count = goodRead.json()['books'][0]['work_ratings_count']
+    avg_rating = goodRead.json()['books'][0]['average_rating']
+    return (rev_count, avg_rating)
