@@ -57,13 +57,14 @@ def register():
         if not request.form.get("password-confir"):
             return "must confirm your password"
         if request.form.get("password") != request.form.get("password-confir"):
-            return "The passwords are not the same"
+            return render_template("register.html", pswNotSame = True)
+
         username = request.form.get("username")
         usr = db.execute("SELECT * FROM users WHERE user_name =:user_name", {"user_name":username}).fetchone()
         
 
         if usr is not None:
-            return "The username already exists"
+            return render_template("register.html", usernameExist = True)
 
         psw =  generate_password_hash(request.form.get("password"))
         db.execute("INSERT INTO users (user_name, hash) VALUES (:user_name, :hash)", {"user_name":username, "hash":psw})
@@ -91,9 +92,9 @@ def login():
         username = request.form.get("username")
         usr = db.execute("SELECT * FROM users WHERE user_name = :user_name", {"user_name":username}).fetchone()
         psw = request.form.get("password")
-
-        if usr is None and not check_password_hash(usr[2], psw):
-            return "invalid username and/or password"
+        
+        if usr is None or not check_password_hash(usr[2], psw):
+            return render_template("login.html", invalidPsw = True)
         
         session["user_id"] = usr[0]
         return render_template("index.html")
@@ -110,21 +111,21 @@ def logout():
     return render_template("login.html")
 
 
-@app.route("/book/<book_isbn>", methods = ["GET"])
-def book(book_isbn):
+@app.route("/book/<book_isbn>/<review>", methods = ["GET"])
+def book(book_isbn, review):
     book_info = db.execute("SELECT * FROM books WHERE books.isbn =:isbn", {"isbn":book_isbn}).fetchone()
     reviews = db.execute("SELECT b.review, users.user_name, b.rating FROM books_review AS b\
                           JOIN users ON users.id_user = b.id_user\
                           JOIN books ON books.isbn = b.isbn WHERE books.isbn =:isbn", {"isbn":book_isbn}).fetchall()
-    print(reviews)
+    
     rev_count = goodreads(book_isbn)[0]
     avg_rating = goodreads(book_isbn)[1]
-
-    if reviews is None:
+    print(reviews)
+    if reviews is None or reviews == []:
         any_reviews = False
     else:
         any_reviews = True
-    return render_template("info_book.html", book_info=book_info, reviews=reviews, rev_count=rev_count, avg=avg_rating, any_reviews=any_reviews)
+    return render_template("info_book.html", book_info=book_info, reviews=reviews, rev_count=rev_count, avg=avg_rating, any_reviews=any_reviews, reviewExists=review)
     
 @app.route("/review", methods = ["GET","POST"])
 def review():
@@ -135,7 +136,7 @@ def review():
         usr = session["user_id"]
         check_usr_review = db.execute("SELECT * FROM books_review AS b JOIN users ON users.id_user = b.id_user WHERE b.id_user =:id", {"id": usr}).fetchall()
         if check_usr_review is not None:
-            return "You have already given a review for this book"
+            return book(book, True)
         else:
             db.execute("INSERT INTO books_review (review, isbn, id_user, rating) VALUES (:review, :isbn, :id_user, :rating)", {"review": review, "isbn": book, "id_user": usr, "rating": rate})
             db.commit

@@ -2,12 +2,19 @@
 
 {% block main %}
     <div class="register-form">
-        <p>Register</p>
+        <p class="title">Register</p>
         <form class= "rform"  action="/register" method="post" id="rform">
+            
             <input type="text" name="username"  placeholder="Username" id="username">
+            {% if usernameExist %}
+                <p class="text-form">the username already exists</p>
+            {% endif %}
             <input type="password" name="password" id="password" placeholder="Password">
             <input type="password" name="password-confir" id="password-confir" placeholder="Password Confirmation">
-            <button id="submit" type="submit">Submit</button>
+            {% if pswNotSame %}
+                <p class="text-form">Oops you didn't write the same password</p>
+            {% endif %}
+            <button class="button" id="submit" type="submit">Submit</button>
         </form>
         
     </div>

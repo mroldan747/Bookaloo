@@ -2,38 +2,51 @@
 
 {% block main %}
 <div class="book">
-        <h2>{{ book_info.title }}</h2>
-        <p class="info"><span>Author: </span>{{ book_info.author }}</p>
-        <p class="info"><span>ISBN: </span>{{ book_info.isbn }}</p>
-        <p><span>Year: </span>{{ book_info.year }}</p>
-        <p><span>Average rating on Good reads: </span>{{ avg }}</p>
-        <p><span>Number of reviews on Good reads: </span> {{ rev_count }}</p>
-        <form action="/review" method="post">
-                <input type="hidden" name="isbn" value="{{ book_info.isbn }}" id="isbn" />
-                <select name="rate" id="rate">
-                        <option value="">--Please choose a rating--</option>
-                        <option value="one">1</option>
-                        <option value="two">2</option>
-                        <option value="three">3</option>
-                        <option value="four">4</option>
-                        <option value="five">5</option>
-                </select>
-                <textarea name="review" id="review" cols="30" rows="10">Write here..</textarea>
-                <button id="submit" type="submit">Submit</button>
-        </form>
-        <span>Reviews :</span>
-        <div class="review">
-                {% if any_reviews %}
-                        {% for book_review in reviews %}
-                                <p>{{ book_review.user_name }}</p><span>Note: {{ book_review.rating }}</span>
-                                <p>{{ book_review.review }}</p>
-                        {% endfor %}
-                {% else %}
-                        <p>Be the first to submit a review</p>
-                {% endif %}
-
+        <div class="container">
+                <div>
+                        <h2>{{ book_info.title }}</h2>
+                        <p class="info"><span>Author: </span>{{ book_info.author }}</p>
+                        <p class="info"><span>ISBN: </span>{{ book_info.isbn }}</p>
+                        <p><span>Year: </span>{{ book_info.year }}</p>
+                        <p><span>Average rating on Good reads: </span>{{ avg }}</p>
+                        <p><span>Number of reviews on Good reads: </span> {{ rev_count }}</p>
+                </div>
+        
+                <form action="/review" method="post" >
+                        <input type="hidden" name="isbn" value="{{ book_info.isbn }}" id="isbn" />
+                        <select name="rate" id="rate">
+                                <option value="">--Please choose a rating--</option>
+                                <option value="one">1</option>
+                                <option value="two">2</option>
+                                <option value="three">3</option>
+                                <option value="four">4</option>
+                                <option value="five">5</option>
+                        </select>
+                        <textarea name="review" id="review" cols="30" rows="10">Write here..</textarea>
+                        {% if reviewExists == True %}
+                        <p class="text-form">You have already given a review for this book</p>
+                        {% endif %}
+                        <div >
+                                <button class="button" id="submit" type="submit">Submit</button>
+                        </div>
+                        
+                </form>
         </div>
+        
+        <div class="reviews">
+                <span>Reviews :</span>
+                <div class="review">
+                        {% if any_reviews %}
+                                {% for book_review in reviews %}
+                                        <p class="username">{{ book_review.user_name }}</p><span>Note: {{ book_review.rating }}</span>
+                                        <p>{{ book_review.review }}</p>
+                                {% endfor %}
+                        {% else %}
+                                <p>Be the first to submit a review</p>
+                        {% endif %}
 
+                </div>
+        </div>
 </div>
 
 {% endblock %}
